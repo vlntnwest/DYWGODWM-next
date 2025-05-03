@@ -15,10 +15,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr" className={champFont.variable}>
       <body
-        className="overflow-hidden max-h-screen
+        className="overflow-hidden max-h-dvh
 "
       >
-        <div className="flex max-h-screen max-w-screen flex-col items-center justify-center min-h-screen bg-primary text-accent p-4">
+        <div className="flex max-h-dvh max-w-screen flex-col items-center justify-center min-h-screen bg-primary text-accent p-4">
           {children}
         </div>
       </body>

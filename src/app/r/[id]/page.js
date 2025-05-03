@@ -100,7 +100,10 @@ export default function DateGame() {
   );
 
   const renderSelect = () => (
-    <div className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15">
+    <div
+      className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15 max-h-dvh
+"
+    >
       <div>
         <h1 className="text-4xl font-champ ">Select a date</h1>
         <div className="mt-4 flex gap-2 flex-col items-center py-6">
@@ -116,7 +119,7 @@ export default function DateGame() {
         className="w-72 font-champ"
         onClick={() => handleValidate()}
       >
-        {isLoading ? "Sending" : "Validate"}
+        {isLoading ? "Sending..." : "Validate"}
       </Button>
     </div>
   );
