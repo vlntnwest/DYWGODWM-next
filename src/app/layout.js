@@ -1,14 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { localFont } from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const champFont = localFont({
+  src: "../fonts/Champ-Black.woff2",
+  variable: "--font-champ",
 });
 
 export const metadata = {
@@ -18,9 +13,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+    <html lang="fr" className={champFont.variable}>
+      <body>
+        <div className="flex max-h-screen max-w-screen flex-col items-center justify-center min-h-screen bg-primary text-accent p-4">
+          {children}
+        </div>
       </body>
     </html>
   );
