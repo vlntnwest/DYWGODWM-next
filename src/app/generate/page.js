@@ -61,7 +61,7 @@ export default function LinkGenerator() {
   return (
     <div className="flex flex-col items-center justify-center max-w-md">
       <h1 className="font-champ text-6xl font-semibold text-center mb-4">
-        Générateur de lien
+        Generate your link
       </h1>{" "}
       <form
         onSubmit={handleSubmit}
@@ -70,7 +70,7 @@ export default function LinkGenerator() {
         <Input
           type="text"
           name="senderName"
-          placeholder="Ton prénom"
+          placeholder="Your name"
           value={form.senderName}
           onChange={handleChange}
           required
@@ -78,7 +78,7 @@ export default function LinkGenerator() {
         <Input
           type="tel"
           name="senderPhone"
-          placeholder="Ton numéro (ex: 33612345678)"
+          placeholder="Phone number"
           value={form.senderPhone}
           onChange={handleChange}
           required
@@ -86,14 +86,14 @@ export default function LinkGenerator() {
         <Input
           type="text"
           name="dateName"
-          placeholder="Prénom du date"
+          placeholder="Date name"
           value={form.dateName}
           onChange={handleChange}
           required
         />
 
         <Button variant="fancy" type="submit" className="w-full font-champ ">
-          {loading ? "Génération..." : "Générer le lien"}
+          {loading ? "Creating your link..." : "Validate"}
         </Button>
       </form>
       <a
@@ -102,12 +102,12 @@ export default function LinkGenerator() {
         rel="noopener noreferrer"
         className="underline decoration-accent hover:decoration-primary"
       >
-        Active les notifications par What&apos;s app
+        Active What&apos;s app notifications
       </a>
       {result && (
         <div className="mt-6 text-center max-w-md mx-auto break-words">
           <Button variant="fancy" onClick={() => handleCopy()}>
-            {isCopied ? "Lien copié" : "Copier le lien"}{" "}
+            {isCopied ? "Link copied" : "Copy the link"}{" "}
           </Button>
         </div>
       )}

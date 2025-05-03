@@ -73,7 +73,7 @@ export default function DateGame() {
 
   const renderHome = () => (
     <div className="text-center space-y-4 flex flex-col items-center">
-      <h1 className="text-6xl font-champ font-bold" ref={titleRef}>
+      <h1 className="text-4xl font-champ font-bold" ref={titleRef}>
         Do you want to go on a date with me?
       </h1>
       <div className="flex justify-center">
@@ -102,7 +102,7 @@ export default function DateGame() {
   const renderSelect = () => (
     <div className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15">
       <div>
-        <h1 className="text-6xl font-champ ">Select a date</h1>
+        <h1 className="text-4xl font-champ ">Select a date</h1>
         <div className="mt-4 flex gap-2 flex-col items-center py-6">
           <DateTimePicker24h onChange={(date) => setMyDate(date)} />
           <LocationRadioGroup
@@ -123,7 +123,7 @@ export default function DateGame() {
 
   const renderCongrats = () => (
     <div className="text-center space-y-4">
-      <h1 className="text-6xl font-champ">
+      <h1 className="text-4xl font-champ">
         Congrats, you earned a special time with me
       </h1>
       <div className="flex justify-center">
