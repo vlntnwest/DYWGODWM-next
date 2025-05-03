@@ -102,7 +102,7 @@ export default function LinkGenerator() {
         rel="noopener noreferrer"
         className="underline decoration-accent hover:decoration-primary"
       >
-        Active les notifications par What's app
+        Active les notifications par What&apos;s app
       </a>
       {result && (
         <div className="mt-6 text-center max-w-md mx-auto break-words">
