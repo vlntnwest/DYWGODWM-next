@@ -13,6 +13,9 @@ export async function GET(request, { params }) {
   try {
     const link = await prisma.appointmentLink.findUnique({
       where: { id: linkId },
+      include: {
+        locations: true,
+      },
     });
 
     if (!link) {

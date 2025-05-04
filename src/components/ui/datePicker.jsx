@@ -49,7 +49,7 @@ export function DateTimePicker24h({ onChange }) {
         <Button
           variant="outline"
           className={cn(
-            "w-full justify-start text-left font-normal bg-primary text-accent rounded-xl",
+            "w-full max-w-[400px] justify-start text-left font-normal bg-primary text-accent rounded-xl hover:text-primary",
             !date && "text-muted-foreground"
           )}
         >

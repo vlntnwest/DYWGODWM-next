@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { senderName, senderPhone, dateName } = body;
+    const { senderName, senderPhone, dateName, locations } = body;
 
     if (!senderName || !senderPhone || !dateName) {
       return new Response(JSON.stringify({ message: "Champs manquants" }), {
@@ -13,11 +14,19 @@ export async function POST(request) {
       });
     }
 
+    const phone = parsePhoneNumberFromString(senderPhone, "FR");
+    const formattedPhone = phone
+      ? phone.number.replace("+", "")
+      : form.senderPhone;
+
     const newLink = await prisma.appointmentLink.create({
       data: {
         senderName,
-        senderPhone,
+        senderPhone: formattedPhone,
         dateName,
+        locations: {
+          create: locations.map((loc) => ({ name: loc })),
+        },
       },
     });
 

@@ -20,6 +20,17 @@ model AppointmentLink {
   dateName       String
   createdAt      DateTime      @default(now())
   appointments   Appointment[]
+  locations      Location[]    
+
+}
+
+model Location {
+  id              String             @id @default(cuid())
+  name            String
+  linkId          String
+  link            AppointmentLink    @relation(fields: [linkId], references: [id])
+
+  @@unique([name, linkId]) 
 }
 
 

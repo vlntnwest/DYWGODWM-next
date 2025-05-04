@@ -85,7 +85,7 @@ export async function POST(request, { params }) {
 
       await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/notify`, {
         to: linkData.senderPhone,
-        text: `📅 ${linkData.dateName} a confirmé un rendez-vous pour le ${location} à ${formattedDate}.`,
+        text: `📅 ${linkData.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`,
       });
     } catch (error) {
       console.error("Erreur lors du fetch ou notify:", error);

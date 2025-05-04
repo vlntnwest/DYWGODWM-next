@@ -14,6 +14,7 @@ export default function DateGame() {
   const [myDate, setMyDate] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [locations, setLocations] = useState([]);
 
   const noBtnRef = useRef(null);
   const titleRef = useRef(null);
@@ -45,6 +46,32 @@ export default function DateGame() {
       noButton.onmouseover = moveButton;
     }
   }, [step]);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_URL}/api/link/${params.id}`
+        );
+        const linkData = response.data;
+        console.log(linkData);
+
+        const fetchedLocations =
+          linkData.locations?.map((loc) => loc.name) || [];
+
+        if (fetchedLocations.length === 0) {
+          setLocations(["Parc", "Terrasse", "Rooftop", "Café"]);
+        } else {
+          setLocations(fetchedLocations);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des lieux :", error);
+        setLocations(["Parc", "Terrasse", "Rooftop", "Café"]);
+      }
+    };
+
+    fetchLocations();
+  }, [params.id]);
 
   const handleValidate = async () => {
     setIsLoading(true);
@@ -80,14 +107,14 @@ export default function DateGame() {
         <Image
           src="/img/love_gif.webp"
           alt="Cute animated illustration"
-          width={300}
+          width={400}
           height={300}
         />
       </div>
-      <div className=" mt-4 flex gap-4 flex-col max-w-70 min-h-[120px] ">
+      <div className=" mt-4 flex gap-4 flex-col max-w-70 min-h-[120px] px-4">
         <Button
           variant="fancy"
-          className="w-70"
+          className="w-70 cursor-pointer"
           onClick={() => setStep("select")}
         >
           Yes
@@ -100,27 +127,27 @@ export default function DateGame() {
   );
 
   const renderSelect = () => (
-    <div
-      className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15 max-h-dvh
-"
-    >
-      <div>
+    <div className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15 max-h-dvh w-70">
+      <div className="w-full px-4">
         <h1 className="text-4xl font-champ ">Select a date</h1>
         <div className="mt-4 flex gap-2 flex-col items-center py-6">
           <DateTimePicker24h onChange={(date) => setMyDate(date)} />
           <LocationRadioGroup
             value={selectedOption}
             onChange={(value) => setSelectedOption(value)}
+            locations={locations}
           />
         </div>
       </div>
-      <Button
-        variant="fancy"
-        className="w-72 font-champ"
-        onClick={() => handleValidate()}
-      >
-        {isLoading ? "Sending..." : "Validate"}
-      </Button>
+      <div className="w-full px-4">
+        <Button
+          variant="fancy"
+          className="w-full max-w-70 font-champ cursor-pointer px-4"
+          onClick={() => handleValidate()}
+        >
+          {isLoading ? "Sending..." : "Validate"}
+        </Button>
+      </div>
     </div>
   );
 
@@ -136,7 +163,7 @@ export default function DateGame() {
   );
 
   return (
-    <div className=" min-h-screen max-w-screen flex items-center justify-center">
+    <div className="min-h-screen max-w-screen flex items-center justify-center">
       {step === "home"
         ? renderHome()
         : step === "congrats"
