@@ -1,45 +1,61 @@
-export async function POST(req) {
+// app/api/notify/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+
+// Création du transporter en dehors du handler pour réutilisation
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_SERVER_HOST,
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.SMTP_SERVER_USERNAME,
+    pass: process.env.SMTP_SERVER_PASSWORD,
+  },
+});
+
+// (Optionnel) vérifier la config au démarrage
+transporter.verify().catch((err) => {
+  console.error("Erreur de configuration SMTP :", err);
+});
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+export async function POST(request) {
   try {
-    const body = await req.json();
-    const { to, text } = body;
+    const { to, text } = await request.json();
 
     if (!to || !text) {
-      return new Response(JSON.stringify({ message: "Paramètres manquants" }), {
-        status: 400,
-      });
+      return NextResponse.json(
+        { message: "Paramètres manquants : 'to' et 'text' sont requis" },
+        { status: 400 }
+      );
     }
 
-    const payload = {
-      from: process.env.VONAGE_NUMBER, // sandbox WhatsApp Vonage
-      to: to, // format international (ex: "336xxxxxxxx")
-      message_type: "text",
-      text: text,
-      channel: "whatsapp",
-    };
+    if (!emailRegex.test(to)) {
+      return NextResponse.json(
+        { message: "Adresse e-mail invalide" },
+        { status: 400 }
+      );
+    }
 
-    const response = await fetch(
-      "https://messages-sandbox.nexmo.com/v1/messages",
-      {
-        method: "POST",
-        headers: {
-          Authorization:
-            "Basic " +
-            Buffer.from(
-              `${process.env.VONAGE_API_KEY}:${process.env.VONAGE_API_SECRET}`
-            ).toString("base64"),
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
+    // Envoi du mail
+    const info = await transporter.sendMail({
+      from: `"DYWGODWM" <${process.env.SMTP_SERVER_USERNAME}>`,
+      to,
+      subject: "Notification de DYWGODWM",
+      text,
+      html: `<p>${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`,
+    });
+
+    return NextResponse.json(
+      { messageId: info.messageId, envelope: info.envelope },
+      { status: 200 }
     );
-
-    const result = await response.json();
-    return new Response(JSON.stringify(result), { status: response.status });
   } catch (error) {
     console.error("Erreur /api/notify :", error);
-    return new Response(JSON.stringify({ message: "Erreur serveur" }), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { message: "Erreur interne du serveur" },
+      { status: 500 }
+    );
   }
 }

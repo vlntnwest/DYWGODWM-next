@@ -87,6 +87,9 @@ export default function LinkGenerator() {
         className="w-full max-w-md space-y-4 bg-primary p-6 rounded-xl "
       >
         <Input
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
           type="text"
           name="senderName"
           placeholder="Your name"
@@ -95,6 +98,9 @@ export default function LinkGenerator() {
           required
         />
         <Input
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
           type="email"
           name="senderMail"
           placeholder="Email adress"
@@ -103,6 +109,9 @@ export default function LinkGenerator() {
           required
         />
         <Input
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
           type="text"
           name="dateName"
           placeholder="Date name"
@@ -112,6 +121,9 @@ export default function LinkGenerator() {
         />
         <div className="flex gap-2 items-center">
           <Input
+            className={
+              "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+            }
             type="text"
             placeholder="Add a location"
             value={newLocation}

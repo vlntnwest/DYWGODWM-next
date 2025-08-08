@@ -33,7 +33,7 @@ export async function GET(request, { params }) {
 }
 
 export async function POST(request, { params }) {
-  const { linkId } = params;
+  const { linkId } = await params;
 
   if (!linkId) {
     return new Response(JSON.stringify({ message: "ID du lien manquant" }), {
