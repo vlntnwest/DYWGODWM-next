@@ -84,7 +84,7 @@ export async function POST(request, { params }) {
       const linkData = response.data;
 
       await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/notify`, {
-        to: linkData.senderPhone,
+        to: linkData.senderMail,
         text: `📅 ${linkData.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`,
       });
     } catch (error) {
