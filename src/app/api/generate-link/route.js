@@ -1,28 +1,29 @@
 import { PrismaClient } from "@prisma/client";
-import parsePhoneNumberFromString from "libphonenumber-js";
+import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { senderName, senderPhone, dateName, locations } = body;
+    const { senderName, senderMail, dateName, locations } = body;
 
-    if (!senderName || !senderPhone || !dateName) {
+    if (!senderName || !senderMail || !dateName) {
       return new Response(JSON.stringify({ message: "Champs manquants" }), {
         status: 400,
       });
     }
 
-    const phone = parsePhoneNumberFromString(senderPhone, "FR");
-    const formattedPhone = phone
-      ? phone.number.replace("+", "")
-      : form.senderPhone;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailRegex.test(senderMail)) {
+      return NextResponse.json({ message: "Email invalide" }, { status: 400 });
+    }
 
     const newLink = await prisma.appointmentLink.create({
       data: {
         senderName,
-        senderPhone: formattedPhone,
+        senderMail,
         dateName,
         locations: {
           create: locations.map((loc) => ({ name: loc })),

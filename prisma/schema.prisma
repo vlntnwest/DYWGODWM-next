@@ -16,7 +16,7 @@ datasource db {
 model AppointmentLink {
   id             String        @id @default(cuid())
   senderName     String
-  senderPhone    String
+  senderMail     String
   dateName       String
   createdAt      DateTime      @default(now())
   appointments   Appointment[]

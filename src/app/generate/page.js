@@ -8,7 +8,7 @@ import axios from "axios";
 export default function LinkGenerator() {
   const [form, setForm] = useState({
     senderName: "",
-    senderPhone: "",
+    senderMail: "",
     dateName: "",
   });
   const [newLocation, setNewLocation] = useState("");
@@ -40,8 +40,6 @@ export default function LinkGenerator() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const whatsappUrl = "https://wa.me/14157386102?text=Join%20coach%20polo";
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -59,7 +57,7 @@ export default function LinkGenerator() {
       setResult(res.data);
       if (res.data) {
         setResult(res.data);
-        setForm({ senderName: "", senderPhone: "", dateName: "" });
+        setForm({ senderName: "", senderMail: "", dateName: "" });
         setNewLocation("");
         setLocations([]);
       }
@@ -89,6 +87,9 @@ export default function LinkGenerator() {
         className="w-full max-w-md space-y-4 bg-primary p-6 rounded-xl "
       >
         <Input
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
           type="text"
           name="senderName"
           placeholder="Your name"
@@ -97,14 +98,20 @@ export default function LinkGenerator() {
           required
         />
         <Input
-          type="tel"
-          name="senderPhone"
-          placeholder="Phone number"
-          value={form.senderPhone}
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
+          type="email"
+          name="senderMail"
+          placeholder="Email adress"
+          value={form.senderMail}
           onChange={handleChange}
           required
         />
         <Input
+          className={
+            "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+          }
           type="text"
           name="dateName"
           placeholder="Date name"
@@ -114,6 +121,9 @@ export default function LinkGenerator() {
         />
         <div className="flex gap-2 items-center">
           <Input
+            className={
+              "selection:text-[var(--color-primary)] selection:bg-[var(--color-accent)]"
+            }
             type="text"
             placeholder="Add a location"
             value={newLocation}
@@ -156,14 +166,6 @@ export default function LinkGenerator() {
           {loading ? "Creating your link..." : "Validate"}
         </Button>
       </form>
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline decoration-accent hover:decoration-primary"
-      >
-        Active What&apos;s app notifications
-      </a>
       {result && (
         <div className="mt-6 text-center max-w-md mx-auto break-words">
           <Button

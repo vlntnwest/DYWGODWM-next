@@ -5,14 +5,19 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTrigger,
+} from "./alert-dialog";
+import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
+import { Button } from "./button";
 
 export function DateTimePicker24h({ onChange }) {
   const [date, setDate] = React.useState();
@@ -44,8 +49,8 @@ export function DateTimePicker24h({ onChange }) {
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
         <Button
           variant="outline"
           className={cn(
@@ -60,9 +65,18 @@ export function DateTimePicker24h({ onChange }) {
             <span>Sélectionne une date</span>
           )}
         </Button>
-      </PopoverTrigger>
+      </AlertDialogTrigger>
 
-      <PopoverContent className="w-auto p-4 bg-primary text-foreground shadow-lg rounded-xl">
+      <AlertDialogContent className="w-auto p-4 bg-primary text-foreground shadow-lg rounded-xl">
+        <div className="hidden">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </div>
         <div className="sm:flex gap-4">
           <Calendar
             mode="single"
@@ -120,7 +134,12 @@ export function DateTimePicker24h({ onChange }) {
             </ScrollArea>
           </div>
         </div>
-      </PopoverContent>
-    </Popover>
+        <AlertDialogFooter>
+          <AlertDialogAction className={"text-accent font-champ shadow-none"}>
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

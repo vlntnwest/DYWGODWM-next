@@ -54,7 +54,6 @@ export default function DateGame() {
           `${process.env.NEXT_PUBLIC_URL}/api/link/${params.id}`
         );
         const linkData = response.data;
-        console.log(linkData);
 
         const fetchedLocations =
           linkData.locations?.map((loc) => loc.name) || [];
@@ -107,11 +106,13 @@ export default function DateGame() {
         <Image
           src="/img/love_gif.webp"
           alt="Cute animated illustration"
-          width={400}
-          height={300}
+          width={260}
+          height={270}
+          priority
+          unoptimized
         />
       </div>
-      <div className=" mt-4 flex gap-4 flex-col max-w-70 min-h-[120px] px-4">
+      <div className=" mt-4 flex gap-4 flex-col max-w-80 min-h-[120px] px-4">
         <Button
           variant="fancy"
           className="w-70 cursor-pointer"
@@ -130,13 +131,13 @@ export default function DateGame() {
     <div className="flex flex-col items-center justify-between text-center h-screen pt-20 pb-15 max-h-dvh w-[400px]">
       <div className="w-full px-4">
         <h1 className="text-4xl font-champ ">Select a date</h1>
-        <div className="mt-4 flex gap-2 flex-col items-center py-6">
-          <DateTimePicker24h onChange={(date) => setMyDate(date)} />
+        <div className="mt-4 flex gap-6 flex-col items-center py-6">
           <LocationRadioGroup
             value={selectedOption}
             onChange={(value) => setSelectedOption(value)}
             locations={locations}
           />
+          <DateTimePicker24h onChange={(date) => setMyDate(date)} />
         </div>
       </div>
       <div className="w-full px-4">
@@ -157,7 +158,13 @@ export default function DateGame() {
         Congrats, you earned a special time with me
       </h1>
       <div className="flex justify-center">
-        <Image src="/img/yes_gif.webp" alt="" width={300} height={300} />
+        <Image
+          src="/img/yes_gif.webp"
+          alt=""
+          width={308}
+          height={196}
+          unoptimized
+        />
       </div>
     </div>
   );

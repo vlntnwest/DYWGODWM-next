@@ -33,7 +33,7 @@ export async function GET(request, { params }) {
 }
 
 export async function POST(request, { params }) {
-  const { linkId } = params;
+  const { linkId } = await params;
 
   if (!linkId) {
     return new Response(JSON.stringify({ message: "ID du lien manquant" }), {
@@ -84,7 +84,7 @@ export async function POST(request, { params }) {
       const linkData = response.data;
 
       await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/notify`, {
-        to: linkData.senderPhone,
+        to: linkData.senderMail,
         text: `📅 ${linkData.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`,
       });
     } catch (error) {
