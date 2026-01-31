@@ -48,12 +48,17 @@ export default function DateGame() {
   }, [step]);
 
   useEffect(() => {
-    const fetchLocations = async () => {
+    const fetchLinkData = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_URL}/api/link/${params.id}`
         );
         const linkData = response.data;
+
+        if (!linkData.verified) {
+          setStep("invalid");
+          return;
+        }
 
         const fetchedLocations =
           linkData.locations?.map((loc) => loc.name) || [];
@@ -65,11 +70,11 @@ export default function DateGame() {
         }
       } catch (error) {
         console.error("Erreur lors du chargement des lieux :", error);
-        setLocations(["Parc", "Terrasse", "Rooftop", "Café"]);
+        setStep("invalid");
       }
     };
 
-    fetchLocations();
+    fetchLinkData();
   }, [params.id]);
 
   const handleValidate = async () => {
@@ -169,6 +174,15 @@ export default function DateGame() {
     </div>
   );
 
+  const renderInvalid = () => (
+    <div className="text-center space-y-4">
+      <h1 className="text-4xl font-champ font-bold">
+        This link is not available
+      </h1>
+      <p className="text-lg">It may have expired or hasn&apos;t been verified yet.</p>
+    </div>
+  );
+
   return (
     <div className="min-h-screen max-w-screen flex items-center justify-center">
       {step === "home"
@@ -177,6 +191,8 @@ export default function DateGame() {
         ? renderCongrats()
         : step === "select"
         ? renderSelect()
+        : step === "invalid"
+        ? renderInvalid()
         : null}
     </div>
   );

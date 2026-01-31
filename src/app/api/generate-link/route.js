@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { sendNotification } from "@/lib/mailer";
 
 const prisma = new PrismaClient();
 
@@ -25,19 +26,27 @@ export async function POST(request) {
         senderName,
         senderMail,
         dateName,
+        verified: false,
         locations: {
           create: locations.map((loc) => ({ name: loc })),
         },
       },
     });
 
-    const fullLink = `${process.env.NEXT_PUBLIC_URL}/r/${newLink.id}`;
+    const verifyUrl = `${process.env.NEXT_PUBLIC_URL}/api/verify/${newLink.verificationToken}`;
+
+    await sendNotification(
+      senderMail,
+      `Confirme ton adresse email pour activer ton lien DYWGODWM.\n\nClique ici : ${verifyUrl}`,
+      "Confirme ton email - DYWGODWM",
+      `<p>Confirme ton adresse email pour activer ton lien DYWGODWM.</p>
+       <p><a href="${verifyUrl}" style="display:inline-block;padding:12px 24px;background:#dc0011;color:#fff;border-radius:9999px;text-decoration:none;font-weight:600;">Confirmer mon email</a></p>`
+    );
 
     return new Response(
       JSON.stringify({
-        message: "Lien généré avec succès",
-        linkId: newLink.id,
-        linkUrl: fullLink,
+        message: "Un email de vérification a été envoyé",
+        pendingVerification: true,
       }),
       { status: 201 }
     );

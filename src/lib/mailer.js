@@ -17,14 +17,19 @@ transporter.verify().catch((err) => {
 /**
  * Envoie un email de notification.
  * Usage interne uniquement — pas exposé comme route API.
+ *
+ * @param {string} to - Adresse email du destinataire
+ * @param {string} text - Contenu texte brut
+ * @param {string} [subject] - Sujet de l'email
+ * @param {string} [html] - Contenu HTML (fallback: texte échappé)
  */
-export async function sendNotification(to, text) {
+export async function sendNotification(to, text, subject, html) {
   const info = await transporter.sendMail({
     from: `"DYWGODWM" <${process.env.SMTP_SERVER_USERNAME}>`,
     to,
-    subject: "Notification de DYWGODWM",
+    subject: subject || "Notification de DYWGODWM",
     text,
-    html: `<p>${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`,
+    html: html || `<p>${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`,
   });
 
   return { messageId: info.messageId, envelope: info.envelope };
