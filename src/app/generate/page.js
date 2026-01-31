@@ -15,7 +15,6 @@ export default function LinkGenerator() {
   const [locations, setLocations] = useState([]);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
 
   const handleAddLocation = () => {
     const trimmed = newLocation.trim();
@@ -55,26 +54,15 @@ export default function LinkGenerator() {
       );
 
       setResult(res.data);
-      if (res.data) {
-        setResult(res.data);
-        setForm({ senderName: "", senderMail: "", dateName: "" });
-        setNewLocation("");
-        setLocations([]);
-      }
+      setForm({ senderName: "", senderMail: "", dateName: "" });
+      setNewLocation("");
+      setLocations([]);
     } catch (error) {
       console.error("Erreur lors de la génération :", error);
       alert(error.response?.data?.message || "Erreur lors de la génération");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(result.linkUrl);
-    setIsCopied(true);
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
   };
 
   return (
@@ -166,15 +154,11 @@ export default function LinkGenerator() {
           {loading ? "Creating your link..." : "Validate"}
         </Button>
       </form>
-      {result && (
+      {result?.pendingVerification && (
         <div className="mt-6 text-center max-w-md mx-auto break-words">
-          <Button
-            variant="fancy"
-            className="cursor-pointer"
-            onClick={() => handleCopy()}
-          >
-            {isCopied ? "Link copied" : "Copy the link"}{" "}
-          </Button>
+          <p className="text-lg font-semibold">
+            Check your email inbox to verify your address and activate the link.
+          </p>
         </div>
       )}
     </div>

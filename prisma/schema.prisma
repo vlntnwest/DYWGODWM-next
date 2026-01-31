@@ -14,13 +14,15 @@ datasource db {
 }
 
 model AppointmentLink {
-  id             String        @id @default(cuid())
-  senderName     String
-  senderMail     String
-  dateName       String
-  createdAt      DateTime      @default(now())
-  appointments   Appointment[]
-  locations      Location[]    
+  id                String        @id @default(cuid())
+  senderName        String
+  senderMail        String
+  dateName          String
+  createdAt         DateTime      @default(now())
+  verified          Boolean       @default(false)
+  verificationToken String        @unique @default(cuid())
+  appointments      Appointment[]
+  locations         Location[]
 
 }
 
