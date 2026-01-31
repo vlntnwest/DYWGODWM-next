@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+import { sendNotification } from "@/lib/mailer";
 const prisma = new PrismaClient();
 
 export async function GET(request, { params }) {
@@ -78,20 +78,15 @@ export async function POST(request, { params }) {
       timeStyle: "short",
     });
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}/api/link/${linkId}`
+      await sendNotification(
+        link.senderMail,
+        `📅 ${link.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`
       );
-      const linkData = response.data;
-
-      await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/notify`, {
-        to: linkData.senderMail,
-        text: `📅 ${linkData.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`,
-      });
     } catch (error) {
-      console.error("Erreur lors du fetch ou notify:", error);
+      console.error("Erreur lors de l'envoi de la notification:", error);
       return new Response(
         JSON.stringify({
-          message: "Erreur lors de l’envoi de la notification",
+          message: "Erreur lors de l'envoi de la notification",
         }),
         { status: 500 }
       );
