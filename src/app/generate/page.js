@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -154,6 +155,14 @@ export default function LinkGenerator() {
           {loading ? "Creating your link..." : "Validate"}
         </Button>
       </form>
+      <p className="mt-4 text-center text-sm opacity-60">
+        Ton prénom et ton email sont utilisés uniquement pour activer ton lien
+        et te transmettre la réponse —{" "}
+        <Link href="/legal" className="underline underline-offset-4">
+          en savoir plus
+        </Link>
+        .
+      </p>
       {result?.pendingVerification && (
         <div className="mt-6 text-center max-w-md mx-auto break-words">
           <p className="text-lg font-semibold">
