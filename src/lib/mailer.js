@@ -11,23 +11,23 @@ const transporter = nodemailer.createTransport({
 });
 
 transporter.verify().catch((err) => {
-  console.error("Erreur de configuration SMTP :", err);
+  console.error("SMTP configuration error:", err);
 });
 
 /**
- * Envoie un email de notification.
- * Usage interne uniquement — pas exposé comme route API.
+ * Sends a notification email.
+ * Internal use only, not exposed as an API route.
  *
- * @param {string} to - Adresse email du destinataire
- * @param {string} text - Contenu texte brut
- * @param {string} [subject] - Sujet de l'email
- * @param {string} [html] - Contenu HTML (fallback: texte échappé)
+ * @param {string} to - Recipient email address
+ * @param {string} text - Plain text body
+ * @param {string} [subject] - Email subject
+ * @param {string} [html] - HTML body (falls back to the escaped text)
  */
 export async function sendNotification(to, text, subject, html) {
   const info = await transporter.sendMail({
     from: `"DYWGODWM" <${process.env.SMTP_SERVER_USERNAME}>`,
     to,
-    subject: subject || "Notification de DYWGODWM",
+    subject: subject || "A message from DYWGODWM",
     text,
     html: html || `<p>${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`,
   });

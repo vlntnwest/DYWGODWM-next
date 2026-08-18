@@ -62,7 +62,7 @@ export function DateTimePicker24h({ onChange }) {
           {date ? (
             format(date, "dd/MM/yyyy HH:mm")
           ) : (
-            <span>Sélectionne une date</span>
+            <span>Pick a date</span>
           )}
         </Button>
       </AlertDialogTrigger>

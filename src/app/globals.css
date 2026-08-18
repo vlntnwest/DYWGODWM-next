@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Couleurs de base inspirées de l'image */
+  /* Base colors */
   --color-primary: rgb(251, 253, 240);
   --color-accent: rgb(220, 0, 17); /* rouge accent (text/button) */
 
@@ -23,9 +23,9 @@ body {
   box-sizing: border-box;
 }
 
-/* NB : pas de règle `a { color: inherit }` ici — hors @layer, elle l'emporterait
-   sur les utilitaires Tailwind (`text-white` d'un Link en style bouton).
-   Le preflight fournit déjà la même règle dans @layer base. */
+/* No `a { color: inherit }` rule here: outside of @layer it would beat the
+   Tailwind utilities (e.g. `text-white` on a Link styled as a button).
+   Preflight already provides the same rule inside @layer base. */
 
 @media (prefers-color-scheme: dark) {
   html {

@@ -64,7 +64,7 @@ export default function DateGame() {
           linkData.locations?.map((loc) => loc.name) || [];
 
         if (fetchedLocations.length === 0) {
-          setLocations(["Parc", "Terrasse", "Rooftop", "Café"]);
+          setLocations(["Park", "Terrace", "Rooftop", "Coffee shop"]);
         } else {
           setLocations(fetchedLocations);
         }

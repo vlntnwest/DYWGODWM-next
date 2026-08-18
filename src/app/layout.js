@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr" className={champFont.variable}>
+    <html lang="en" className={champFont.variable}>
       <body
         className="selection:text-[var(--color-primary)]
     selection:bg-[var(--color-accent)]

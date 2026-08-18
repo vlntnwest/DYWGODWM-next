@@ -6,7 +6,7 @@ export async function GET(request, { params }) {
   const { token } = await params;
 
   if (!token) {
-    return new Response(JSON.stringify({ message: "Token manquant" }), {
+    return new Response(JSON.stringify({ message: "Missing token" }), {
       status: 400,
     });
   }
@@ -17,7 +17,7 @@ export async function GET(request, { params }) {
     });
 
     if (!link) {
-      return new Response(JSON.stringify({ message: "Token invalide" }), {
+      return new Response(JSON.stringify({ message: "Invalid token" }), {
         status: 404,
       });
     }
@@ -38,7 +38,7 @@ export async function GET(request, { params }) {
     );
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ message: "Erreur serveur" }), {
+    return new Response(JSON.stringify({ message: "Server error" }), {
       status: 500,
     });
   }
