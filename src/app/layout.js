@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const champFont = localFont({
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         <div className="flex max-h-dvh max-w-screen flex-col items-center justify-center min-h-screen bg-primary text-accent p-4">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );

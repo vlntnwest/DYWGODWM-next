@@ -9,7 +9,7 @@ export default function Home() {
       <h1 className="absolute inset-x-0 top-[40%] -translate-y-1/2 text-6xl font-champ">
         Ask your date
       </h1>
-      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3">
         <Link
           href="/generate"
           className={cn(buttonVariants({ variant: "fancy" }), "font-champ")}
@@ -21,6 +21,12 @@ export default function Home() {
           className="underline underline-offset-4 hover:opacity-80"
         >
           How it works
+        </Link>
+        <Link
+          href="/legal"
+          className="text-sm underline underline-offset-4 opacity-60 hover:opacity-100"
+        >
+          Mentions légales
         </Link>
       </div>
     </div>

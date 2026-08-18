@@ -57,6 +57,12 @@ export default function HowItWorks() {
         <Link href="/" className="underline underline-offset-4 hover:opacity-80">
           Back to home
         </Link>
+        <Link
+          href="/legal"
+          className="text-sm underline underline-offset-4 opacity-60 hover:opacity-100"
+        >
+          Mentions légales
+        </Link>
       </div>
     </div>
   );
