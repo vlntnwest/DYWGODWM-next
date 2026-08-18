@@ -23,9 +23,9 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  color: inherit;
-}
+/* NB : pas de règle `a { color: inherit }` ici — hors @layer, elle l'emporterait
+   sur les utilitaires Tailwind (`text-white` d'un Link en style bouton).
+   Le preflight fournit déjà la même règle dans @layer base. */
 
 @media (prefers-color-scheme: dark) {
   html {
