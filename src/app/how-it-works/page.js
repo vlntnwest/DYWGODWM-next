@@ -32,7 +32,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <div className="w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto py-8">
+    <div className="w-full max-w-2xl py-8">
       <h1 className="font-champ text-5xl text-center mb-10">How it works</h1>
       <ol className="space-y-8">
         {steps.map((step, index) => (
@@ -56,12 +56,6 @@ export default function HowItWorks() {
         </Link>
         <Link href="/" className="underline underline-offset-4 hover:opacity-80">
           Back to home
-        </Link>
-        <Link
-          href="/legal"
-          className="text-sm underline underline-offset-4 opacity-60 hover:opacity-100"
-        >
-          Mentions légales
         </Link>
       </div>
     </div>
