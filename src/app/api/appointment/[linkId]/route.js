@@ -6,7 +6,7 @@ export async function GET(request, { params }) {
   const { linkId } = params;
 
   if (!linkId) {
-    return new Response(JSON.stringify({ message: "ID du lien manquant" }), {
+    return new Response(JSON.stringify({ message: "Missing link id" }), {
       status: 400,
     });
   }
@@ -18,7 +18,7 @@ export async function GET(request, { params }) {
 
     if (!appointments || appointments.length === 0) {
       return new Response(
-        JSON.stringify({ message: "Aucun rendez-vous trouvé" }),
+        JSON.stringify({ message: "No appointment found" }),
         { status: 404 }
       );
     }
@@ -26,7 +26,7 @@ export async function GET(request, { params }) {
     return new Response(JSON.stringify(appointments), { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ message: "Erreur serveur" }), {
+    return new Response(JSON.stringify({ message: "Server error" }), {
       status: 500,
     });
   }
@@ -36,7 +36,7 @@ export async function POST(request, { params }) {
   const { linkId } = await params;
 
   if (!linkId) {
-    return new Response(JSON.stringify({ message: "ID du lien manquant" }), {
+    return new Response(JSON.stringify({ message: "Missing link id" }), {
       status: 400,
     });
   }
@@ -47,18 +47,18 @@ export async function POST(request, { params }) {
 
     if (!date || !location) {
       return new Response(
-        JSON.stringify({ message: "Champs requis manquants" }),
+        JSON.stringify({ message: "Missing required fields" }),
         { status: 400 }
       );
     }
 
-    // Récupérer le nom du date depuis le lien
+    // Read the date's name from the link
     const link = await prisma.appointmentLink.findUnique({
       where: { id: linkId },
     });
 
     if (!link) {
-      return new Response(JSON.stringify({ message: "Lien inexistant" }), {
+      return new Response(JSON.stringify({ message: "Link not found" }), {
         status: 404,
       });
     }
@@ -73,20 +73,20 @@ export async function POST(request, { params }) {
       },
     });
 
-    const formattedDate = new Date(date).toLocaleString("fr-FR", {
+    const formattedDate = new Date(date).toLocaleString("en-GB", {
       dateStyle: "medium",
       timeStyle: "short",
     });
     try {
       await sendNotification(
         link.senderMail,
-        `📅 ${link.dateName} a confirmé un rendez-vous pour le ${formattedDate} à ${location}.`
+        `📅 ${link.dateName} confirmed a date on ${formattedDate} at ${location}.`
       );
     } catch (error) {
-      console.error("Erreur lors de l'envoi de la notification:", error);
+      console.error("Failed to send the notification:", error);
       return new Response(
         JSON.stringify({
-          message: "Erreur lors de l'envoi de la notification",
+          message: "Failed to send the notification",
         }),
         { status: 500 }
       );
@@ -94,7 +94,7 @@ export async function POST(request, { params }) {
 
     return new Response(
       JSON.stringify({
-        message: "Rendez-vous enregistré",
+        message: "Appointment saved",
         appointment: newAppointment,
       }),
       {
@@ -103,7 +103,7 @@ export async function POST(request, { params }) {
     );
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ message: "Erreur serveur" }), {
+    return new Response(JSON.stringify({ message: "Server error" }), {
       status: 500,
     });
   }

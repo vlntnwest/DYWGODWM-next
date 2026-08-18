@@ -32,7 +32,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <div className="w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto py-8">
+    <div className="mb-auto w-full max-w-2xl py-8">
       <h1 className="font-champ text-5xl text-center mb-10">How it works</h1>
       <ol className="space-y-8">
         {steps.map((step, index) => (

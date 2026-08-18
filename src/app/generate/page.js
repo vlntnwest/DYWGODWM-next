@@ -58,8 +58,8 @@ export default function LinkGenerator() {
       setNewLocation("");
       setLocations([]);
     } catch (error) {
-      console.error("Erreur lors de la génération :", error);
-      alert(error.response?.data?.message || "Erreur lors de la génération");
+      console.error("Link generation failed:", error);
+      alert(error.response?.data?.message || "Link generation failed");
     } finally {
       setLoading(false);
     }
