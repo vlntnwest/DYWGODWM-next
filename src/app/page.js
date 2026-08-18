@@ -4,10 +4,12 @@ import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
-    /* mb-[20dvh] remonte le bloc : le centre optique tombe à 40% de la hauteur */
-    <div className="text-center space-y-8 flex flex-col items-center mb-[20dvh]">
-      <h1 className="text-6xl font-champ">Ask your date</h1>
-      <div className="flex flex-col items-center gap-4">
+    <div className="relative h-[calc(100dvh-2rem)] w-full text-center">
+      {/* Titre calé sur le centre optique : 40% de la hauteur, soit 60% depuis le bas */}
+      <h1 className="absolute inset-x-0 top-[40%] -translate-y-1/2 text-6xl font-champ">
+        Ask your date
+      </h1>
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4">
         <Link
           href="/generate"
           className={cn(buttonVariants({ variant: "fancy" }), "font-champ")}
